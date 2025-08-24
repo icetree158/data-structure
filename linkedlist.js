@@ -36,7 +36,7 @@ class LinkedList {
     };
   }
 
-  constructor(...iterable) {
+  constructor() {
     this.#head = null;
     this.#tail = null;
   }
@@ -75,7 +75,6 @@ class LinkedList {
   }
 
   add(value, index) {
-    console.log(this.#length);
     if (index === this.#length) {
       this.addToTail(value);
     }
@@ -135,5 +134,3 @@ const iterator = linkedList
 for (const element of iterator) {
   console.log(element);
 }
-
-console.log(linkedList);
