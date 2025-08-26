@@ -1,6 +1,6 @@
 const LinkedList = require("./linkedList");
 
-const generateRandomArray = ({ length }) => {
+const generateRandomArray = (length) => {
   const min = -1000;
   const max = 1000;
   return Array.from(
