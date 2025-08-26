@@ -31,7 +31,7 @@ describe("linked list", () => {
     linkedList = undefined;
   });
 
-  test("Should adding like array.push()", () => {
+  test("Should work like array.push()", () => {
     randomArray.forEach((el) => linkedList.addToTail(el));
     const array = transformToArray(linkedList.getIteratorHead());
 

@@ -579,3 +579,5 @@ class RBTree extends RBNodeStore {
     return indexToNode.get(this.#rootIndex);
   }
 }
+
+module.exports = RBTree;

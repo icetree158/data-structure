@@ -83,7 +83,7 @@ class LinkedList {
       this.addToHead(value);
       return;
     }
-    console.log(value);
+
     if (index < this.#length && index > 0) {
       let i = 0;
       let current = this.#head;
