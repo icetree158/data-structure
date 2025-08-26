@@ -77,10 +77,13 @@ class LinkedList {
   add(value, index) {
     if (index === this.#length) {
       this.addToTail(value);
+      return;
     }
     if (index === 0) {
       this.addToHead(value);
+      return;
     }
+    console.log(value);
     if (index < this.#length && index > 0) {
       let i = 0;
       let current = this.#head;
@@ -120,17 +123,4 @@ class LinkedList {
   }
 }
 
-const linkedList = new LinkedList();
-
-const iterator = linkedList
-  .addToTail("1")
-  .addToTail("4")
-  .add("2", 1)
-  .add("3", 2)
-  .addToHead("0")
-  .addToTail("5")
-  .getIteratorHead();
-
-for (const element of iterator) {
-  console.log(element);
-}
+module.exports = LinkedList;
