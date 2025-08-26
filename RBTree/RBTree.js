@@ -553,7 +553,7 @@ class RBTree extends RBNodeStore {
       const nodeData = this.readAt(i);
       const node = {
         value: nodeData.value,
-        color: nodeData.color === RBNode.COLOR_RED ? 2 : 1,
+        color: nodeData.color === RBNode.COLOR_RED ? 0 : 1,
         parent: null,
         left: null,
         right: null,

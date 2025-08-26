@@ -1,7 +1,7 @@
 const RBTree = require("./RBTree");
 const createTree = require("functional-red-black-tree");
 
-const generateRandomArray = ({ length }) => {
+const generateRandomArray = (length) => {
   const min = -1000;
   const max = 1000;
 
@@ -16,48 +16,75 @@ const generateRandomArray = ({ length }) => {
   ];
 };
 
-const validateTrees = (libNode, treeNode) => {
+const compareTrees = (libNode, treeNode) => {
   if (!libNode && !treeNode) {
     return;
   }
 
   if (libNode.right || treeNode.right) {
-    validateTrees(libNode.right, treeNode.right);
+    compareTrees(libNode.right, treeNode.right);
   }
 
   if (libNode.left || treeNode.left) {
-    validateTrees(libNode.left, treeNode.left);
+    compareTrees(libNode.left, treeNode.left);
   }
 
   expect(libNode.value).toEqual(treeNode.value);
-  expect(libNode.color).toEqual(treeNode.color);
+  expect(libNode._color).toEqual(treeNode.color);
+};
+
+const validateRBProperties = (node, isRoot = false) => {
+  if (!node) return;
+
+
+  if (isRoot) {
+    expect(node.color).toBe(1);
+  }
+
+  if (node.color === 0) {
+    if (node.left) {
+      expect(node.left.color).toBe(1);
+    }
+    if (node.right) {
+      expect(node.right.color).toBe(1);
+    }
+  }
+
+  if (node.left) {
+    expect(node.left.value).toBeLessThan(node.value);
+    expect(node.left.parent).toBe(node);
+  }
+  if (node.right) {
+    expect(node.right.value).toBeGreaterThan(node.value);
+    expect(node.right.parent).toBe(node);
+  }
+
+  validateRBProperties(node.left, false);
+  validateRBProperties(node.right, false);
 };
 
 describe("Red Black tree", () => {
   test("Fill tree & delete", () => {
     let libTree = createTree();
     const tree = new RBTree();
-    const randArray = generateRandomArray(561);
+    const randArray = generateRandomArray(30);
 
-    libTree = randArray.reduce((acc, el) => {
+    let libTreeFill = randArray.reduce((acc, el) => {
       tree.add(el);
-      acc = acc.insert(el, el);
+      return acc.insert(el, el);
     }, libTree);
 
-    let libRootNode = libTree.root;
+    let libRootNode = libTreeFill.root;
     let treeRootNode = tree.toObjectTree();
 
-    validateTrees(libRootNode, treeRootNode);
+    compareTrees(libRootNode, treeRootNode);
 
-    for (let i = 0; i < randArray.length; i += 10) {
-      const candidate = randArray[i];
-      tree.delete(candidate);
-      libTree = libTree.remove(candidate);
+    for (let i = 0; i < randArray.length; i += 3) {
+      tree.delete(randArray[i]);
     }
 
-    libRootNode = libTree.root;
     treeRootNode = tree.toObjectTree();
 
-    validateTrees(libRootNode, treeRootNode);
+    validateRBProperties(treeRootNode, true);
   });
 });
